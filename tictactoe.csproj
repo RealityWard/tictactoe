@@ -12,4 +12,12 @@
     <Resource Include="assets/*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Trist\source\repos\tictactoe\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Trist\source\repos\tictactoe\.editorconfig" />
+  </ItemGroup>
+
 </Project>

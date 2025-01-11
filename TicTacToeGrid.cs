@@ -1,4 +1,5 @@
-﻿namespace tictactoe
+﻿
+namespace tictactoe
 {
   class TicTacToeGrid
   {
@@ -42,11 +43,42 @@
     {
       if (row < 0 || col < 0 || row > 2 || col > 2) return false;
       _Grid[row][col] = _Turn;
-
-      ChangeTurn();
-      return true;
+      int win = CheckForWin();
+      if (win == -1)
+      {
+        // Cat's eye
+        CatsEye();
+        return true;
+      }
+      else if (win == 0)
+      {
+        // Victory
+        victory();
+        return true;
+      }
+      else
+      {
+        ChangeTurn();
+        return true;
+      }
     }
 
+    private void CatsEye()
+    {
+      throw new NotImplementedException();
+    }
+
+    private void victory()
+    {
+      throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Using 2 and 10 to distinguish turns. Reason for 2 and 10
+    /// is each product of 1, 2, 10 in sets of three of any combination
+    /// is unique thus creates a finite amount of unique values that
+    /// indicate whether there is a win.
+    /// </summary>
     private void ChangeTurn()
     {
       if (_Turn == 2)
@@ -57,6 +89,84 @@
       {
         _Turn = 2;
       }
+    }
+
+    /// <summary>
+    /// Checks the 8 win states. Checks in this order:
+    /// rows from top to bottom,
+    /// cols from left to right,
+    /// diagonal negative slope,
+    /// diagonal positive slope.
+    /// </summary>
+    /// <returns>
+    /// -1 for a cat's eye,
+    /// 0 for no win,
+    /// 1 to 8 for a win state in the order read.
+    /// </returns>
+    private int CheckForWin()
+    {
+      int result = 0;
+      int check = 1;
+      int i;
+
+      // Row checks
+      for (i = 0; i < 3; i++)
+      {
+        _WinStates[result] = _Grid[i][0] * _Grid[i][1] * _Grid[i][2];
+        check = CheckRow(_WinStates[result], check);
+        result += 1;
+        if (check < 1) { return result; }
+      }
+
+      // Col checks
+      i = 0;
+      for (i = 0; i < 3; i++)
+      {
+        _WinStates[result] = _Grid[0][i] * _Grid[1][i] * _Grid[2][i];
+        check = CheckRow(_WinStates[result], check);
+        result += 1;
+        if (check < 1) { return result; }
+      }
+
+      // diagonal negative slope
+      _WinStates[result] = _Grid[0][0] * _Grid[1][1] * _Grid[2][2];
+      check = CheckRow(_WinStates[result], check);
+      result += 1;
+      if (check < 1) { return result; }
+
+      // diagonal positive slope
+      _WinStates[result] = _Grid[2][0] * _Grid[1][1] * _Grid[0][2];
+      check = CheckRow(_WinStates[result], check);
+      result += 1;
+      if (check < 1) { return result; }
+
+      // Done with no victory found.
+      if (check > 1)
+      { return 0; }
+      else { return -1; }
+    }
+
+    /// <summary>
+    /// Using the product of the three in the row to determine
+    /// if it is a victory, not victory, or unknown.
+    /// </summary>
+    /// <param name="input">Product of the row.</param>
+    /// <param name="check">Meant to be used to return the result.
+    /// Should start with 1 for proper ongoing results.</param>
+    /// <returns>Possibly modified check.
+    /// If check is -1 then victory.
+    /// If check increases then victory is still possible.
+    /// If check is unchanged then it is unknown if victory is still possible.</returns>
+    private static int CheckRow(int input, int check)
+    {
+      // Victory
+      if (input == 8 || input == 1000)
+      { return -1; }
+      // Victory is still possible
+      if (input == 1 || input == 100 || input == 4 || input == 2 || input == 10)
+      { return check + 1; }
+      // Unknown
+      return check;
     }
   }
 }
