@@ -1,4 +1,6 @@
 ﻿
+using Accessibility;
+
 namespace tictactoe
 {
   class TicTacToeGrid
@@ -41,20 +43,14 @@ namespace tictactoe
       if (row < 0 || col < 0 || row > 2 || col > 2) return -1;
       _Grid[row][col] = _Turn;
       int win = CheckForWin();
-      if (win == -1)
-      {
-        // Cat's eye
-        return 2;
-      }
-      else if (win == 1)
-      {
-        // Victory
-        return 1;
-      }
-      else
+      if (win == 0)
       {
         ChangeTurn();
         return 0;
+      }
+      else
+      {
+        return win;
       }
     }
 
