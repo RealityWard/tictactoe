@@ -41,9 +41,22 @@ namespace tictactoe
     public MainWindow()
     {
       InitializeComponent();
-      _Player[0] = new Player("Temp1", 2, _FileNames[(int)TokenNames.oBlue], Stretch.Fill, _NumberOfTokensPerPlayer, mainGrid);
-      _Player[1] = new Player("Temp2", 10, _FileNames[(int)TokenNames.xBlue], Stretch.Fill, _NumberOfTokensPerPlayer, mainGrid);
+      foreach (TokenColors color in Enum.GetValues(typeof(TokenColors)))
+      {
+        MenuSetup_ColorComboBox.Items.Add(color);
+        MenuSetup_ColorComboBox1.Items.Add(color);
+      }
+      _Player[0] = new Player("Player 1", 2, _FileNames[(int)TokenNames.oBlue], Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
+      _Player[1] = new Player("Player 2", 10, _FileNames[(int)TokenNames.xRed], Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
       _Grid = new(_Player[0].TurnNumber);
+    }
+
+    private void HidePlayerTokens()
+    {
+      foreach (Player player in _Player)
+      {
+        player.HideTokens();
+      }
     }
 
     private bool SetPlayerMove(int row, int col)
@@ -61,12 +74,25 @@ namespace tictactoe
       return false;
     }
 
+    private String GetCurrentPlayerName()
+    {
+      int i;
+      for (i = 0; i < _Player.Length; i++)
+      {
+        if (_Grid.Turn == _Player[i].TurnNumber)
+        {
+          return _Player[i].Name;
+        }
+      }
+      return "";
+    }
+
     private void TttBtnClick(object sender, RoutedEventArgs e)
     {
       Console.WriteLine($"TttBtnClick: {Grid.GetRow((UIElement)sender)}, {Grid.GetColumn((UIElement)sender)}");
       Debug.WriteLine($"TttBtnClick: {Grid.GetRow((UIElement)sender)}, {Grid.GetColumn((UIElement)sender)}");
-      int result = _Grid.ChangeEntry(Grid.GetRow((UIElement)sender), Grid.GetColumn((UIElement)sender));
       SetPlayerMove(Grid.GetRow((UIElement)sender), Grid.GetColumn((UIElement)sender));
+      int result = _Grid.ChangeEntry(Grid.GetRow((UIElement)sender), Grid.GetColumn((UIElement)sender));
       if (result == 0)
       {
         // Indicate turn swap
@@ -74,12 +100,54 @@ namespace tictactoe
       }
       else if (result > 0)
       {
-        //There was a win
-        MessageBox.Show("You won.", "Winner", MessageBoxButton.OK);
+        // There was a win
+        if (WinnerMessageBox.Show($"{GetCurrentPlayerName()} won.") == false)
+        {
+
+        }
       }
       else if (result == -1)
       {
+        // Cat's Eye
         MessageBox.Show("Cat's Eye! :(", "Draw", MessageBoxButton.OK);
+      }
+    }
+
+    private void StartGame(object sender, RoutedEventArgs e)
+    {
+      MenuStart.Visibility = Visibility.Collapsed;
+      MenuSetup.Visibility = Visibility.Visible;
+    }
+
+    private void UncheckAlternateX(object sender, RoutedEventArgs e)
+    {
+      if (MenuSetup_TokenORadioButton1 != null)
+      {
+        MenuSetup_TokenORadioButton1.IsChecked = true;
+      }
+    }
+
+    private void UncheckAlternateX1(object sender, RoutedEventArgs e)
+    {
+      if (MenuSetup_TokenORadioButton != null)
+      {
+        MenuSetup_TokenORadioButton.IsChecked = true;
+      }
+    }
+
+    private void UncheckAlternateO(object sender, RoutedEventArgs e)
+    {
+      if (MenuSetup_TokenXRadioButton1 != null)
+      {
+        MenuSetup_TokenXRadioButton1.IsChecked = true;
+      }
+    }
+
+    private void UncheckAlternateO1(object sender, RoutedEventArgs e)
+    {
+      if (MenuSetup_TokenXRadioButton != null)
+      {
+        MenuSetup_TokenXRadioButton.IsChecked = true;
       }
     }
   }

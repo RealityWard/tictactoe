@@ -13,6 +13,8 @@ namespace tictactoe
   class Player
   {
     private String _Name = "";
+    public String Name
+    { get { return _Name; } }
     private Image[] _Tokens = [];
     private int _TurnNumber = 0;
     public int TurnNumber
@@ -38,6 +40,14 @@ namespace tictactoe
         _Tokens[i].Visibility = Visibility.Hidden;
         _Tokens[i].Stretch = Stretch.Fill;
         _Tokens[i].Source = tokenBI;
+      }
+    }
+
+    public void HideTokens()
+    {
+      for (int i = 0; i < _Tokens.Length; i++)
+      {
+        _Tokens[i].Visibility = Visibility.Hidden;
       }
     }
 
