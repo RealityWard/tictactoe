@@ -16,11 +16,8 @@ namespace tictactoe
     private int[] _WinStates = [1, 1, 1, 1, 1, 1, 1, 1];
 
     private int _Turn = 0;
-
     public int Turn
-    {
-      get { return _Turn; }
-    }
+    { get { return _Turn; } }
 
     /// <summary>
     /// Base object that keeps info of the state of the game
@@ -39,38 +36,26 @@ namespace tictactoe
       }
     }
 
-    public bool ChangeEntry(int row, int col)
+    public int ChangeEntry(int row, int col)
     {
-      if (row < 0 || col < 0 || row > 2 || col > 2) return false;
+      if (row < 0 || col < 0 || row > 2 || col > 2) return -1;
       _Grid[row][col] = _Turn;
       int win = CheckForWin();
       if (win == -1)
       {
         // Cat's eye
-        CatsEye();
-        return true;
+        return 2;
       }
-      else if (win == 0)
+      else if (win == 1)
       {
         // Victory
-        victory();
-        return true;
+        return 1;
       }
       else
       {
         ChangeTurn();
-        return true;
+        return 0;
       }
-    }
-
-    private void CatsEye()
-    {
-      throw new NotImplementedException();
-    }
-
-    private void victory()
-    {
-      throw new NotImplementedException();
     }
 
     /// <summary>
