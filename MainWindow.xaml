@@ -20,30 +20,31 @@
           <ColumnDefinition x:Name="col1"/>
           <ColumnDefinition x:Name="col2"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btn0" Margin="5,5,5,5" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TabIndex="1"/>
-        <Button x:Name="btn1" Margin="5,5,5,5" Grid.Column="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="2"/>
-        <Button x:Name="btn2" Margin="5,5,5,5" Grid.Column="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="3"/>
-        <Button x:Name="btn3" Margin="5,5,5,5" Grid.Row="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="4"/>
-        <Button x:Name="btn4" Margin="5,5,5,5" Grid.Row="1" Grid.Column="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="5"/>
-        <Button x:Name="btn5" Margin="5,5,5,5" Grid.Row="1" Grid.Column="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="6"/>
-        <Button x:Name="btn6" Margin="5,5,5,5" Grid.Row="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="7"/>
-        <Button x:Name="btn7" Margin="5,5,5,5" Grid.Row="2" Grid.Column="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="8"/>
-        <Button x:Name="btn8" Margin="5,5,5,5" Grid.Row="2" Grid.Column="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtnClick" TabIndex="9"/>
+        <Button x:Name="btn0" Margin="5,5,5,5" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TabIndex="1"/>
+        <Button x:Name="btn1" Margin="5,5,5,5" Grid.Column="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="2"/>
+        <Button x:Name="btn2" Margin="5,5,5,5" Grid.Column="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="3"/>
+        <Button x:Name="btn3" Margin="5,5,5,5" Grid.Row="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="4"/>
+        <Button x:Name="btn4" Margin="5,5,5,5" Grid.Row="1" Grid.Column="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="5"/>
+        <Button x:Name="btn5" Margin="5,5,5,5" Grid.Row="1" Grid.Column="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="6"/>
+        <Button x:Name="btn6" Margin="5,5,5,5" Grid.Row="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="7"/>
+        <Button x:Name="btn7" Margin="5,5,5,5" Grid.Row="2" Grid.Column="1" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="8"/>
+        <Button x:Name="btn8" Margin="5,5,5,5" Grid.Row="2" Grid.Column="2" Background="Black" BorderBrush="{x:Null}" Foreground="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Click="TttBtn_OnClick" TabIndex="9"/>
       </Grid>
     </Border>
-    <Grid x:Name="MenuStart" Visibility="Collapsed">
+    <Grid x:Name="MenuStart">
       <Grid.RowDefinitions>
         <RowDefinition Height="7*"/>
         <RowDefinition Height="3*"/>
       </Grid.RowDefinitions>
       <Image x:Name="image" Stretch="Fill" Source="assets/MenuTitle.png" Grid.RowSpan="3"/>
-      <Button x:Name="button" TabIndex="1" Padding="5,5,5,5" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Margin="0,0,0,80" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="StartGame">
+      <Button x:Name="button" TabIndex="1" Padding="5,5,5,5" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Margin="0,0,0,80" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="StartSetupBtn_OnClick">
         <Image Source="assets/MenuStart.png"/>
       </Button>
     </Grid>
-    <Grid x:Name="MenuSetup">
+    <Grid x:Name="MenuSetup" Visibility="Collapsed">
       <Grid.RowDefinitions>
         <RowDefinition Height="50"/>
+        <RowDefinition Height="30"/>
         <RowDefinition Height="30"/>
         <RowDefinition Height="30"/>
         <RowDefinition Height="30"/>
@@ -58,17 +59,22 @@
       <Label x:Name="MenuSetup_NameLabel" Content="Name:" HorizontalAlignment="Right" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Grid.Row="1" Padding="5,5,10,5"/>
       <Label x:Name="MenuSetup_TokenLabel" Content="Token:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="5,5,10,5"/>
       <Label x:Name="MenuSetup_ColorLabel" Content="Color:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Padding="5,5,10,5" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-      <TextBox x:Name="MenuSetup_NameTextBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Player 1" VerticalAlignment="Center" Width="200" TabIndex="1"/>
-      <RadioButton x:Name="MenuSetup_TokenXRadioButton" Grid.Column="1" Content="X" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="2" FontWeight="Bold" IsChecked="True" GroupName="MenuSetup_Token" Checked="UncheckAlternateX"/>
-      <RadioButton x:Name="MenuSetup_TokenORadioButton" Grid.Column="1" Content="O" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="3" FontWeight="Bold" Margin="35,0,0,0" GroupName="MenuSetup_Token" Checked="UncheckAlternateO"/>
-      <ComboBox x:Name="MenuSetup_ColorComboBox" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2" TabIndex="4"/>
+      <TextBox x:Name="MenuSetup_NameTextBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Player 1" VerticalAlignment="Center" Width="200" TabIndex="1" AllowDrop="False"/>
+      <RadioButton x:Name="MenuSetup_TokenXRadioButton" Grid.Column="1" Content="X" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="2" FontWeight="Bold" IsChecked="True" GroupName="MenuSetup_Token" Checked="UncheckAlternateXRadio_OnClick"/>
+      <RadioButton x:Name="MenuSetup_TokenORadioButton" Grid.Column="1" Content="O" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="3" FontWeight="Bold" Margin="35,0,0,0" GroupName="MenuSetup_Token" Checked="UncheckAlternateORadio_OnClick"/>
+      <ComboBox x:Name="MenuSetup_ColorComboBox" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="4"/>
       <Label x:Name="MenuSetup_NameLabel1" Content="Name:" HorizontalAlignment="Right" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Grid.Row="1" Padding="5,5,10,5" Grid.Column="2"/>
       <Label x:Name="MenuSetup_TokenLabel1" Content="Token:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="5,5,10,5" Grid.Column="2"/>
       <Label x:Name="MenuSetup_ColorLabel1" Content="Color:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Padding="5,5,10,5" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Column="2"/>
-      <TextBox x:Name="MenuSetup_NameTextBox1" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Player 1" VerticalAlignment="Center" Width="200" TabIndex="1"/>
-      <RadioButton x:Name="MenuSetup_TokenXRadioButton1" Grid.Column="3" Content="X" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="2" FontWeight="Bold" IsChecked="False" GroupName="MenuSetup_Token1" Checked="UncheckAlternateX1"/>
-      <RadioButton x:Name="MenuSetup_TokenORadioButton1" Grid.Column="3" Content="O" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="3" FontWeight="Bold" Margin="35,0,0,0" GroupName="MenuSetup_Token1" IsChecked="True" Checked="UncheckAlternateO1"/>
-      <ComboBox x:Name="MenuSetup_ColorComboBox1" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2" TabIndex="4"/>
+      <TextBox x:Name="MenuSetup_NameTextBox1" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Player 2" VerticalAlignment="Center" Width="200" TabIndex="1" AllowDrop="False"/>
+      <RadioButton x:Name="MenuSetup_TokenXRadioButton1" Grid.Column="3" Content="X" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="2" FontWeight="Bold" IsChecked="False" GroupName="MenuSetup_Token1" Checked="UncheckAlternateX1Radio_OnClick"/>
+      <RadioButton x:Name="MenuSetup_TokenORadioButton1" Grid.Column="3" Content="O" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" TabIndex="3" FontWeight="Bold" Margin="35,0,0,0" GroupName="MenuSetup_Token1" IsChecked="True" Checked="UncheckAlternateO1Radio_OnClick"/>
+      <ComboBox x:Name="MenuSetup_ColorComboBox1" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="4"/>
+      <RadioButton x:Name="MenuSetup_RadioButton" Grid.Column="1" Content="First Turn" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" GroupName="FirstTurn" IsChecked="True"/>
+      <RadioButton x:Name="MenuSetup_RadioButton1" Grid.Column="3" Content="First Turn" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" GroupName="FirstTurn"/>
+      <Button x:Name="button1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Grid.ColumnSpan="4" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Height="40" Width="90" Click="StartGameBtn_OnClick">
+        <Image Source="assets/MenuStart.png"/>
+      </Button>
 
     </Grid>
   </Grid>

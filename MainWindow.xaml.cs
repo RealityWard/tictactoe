@@ -17,26 +17,9 @@ namespace tictactoe
   /// </summary>
   public partial class MainWindow : Window
   {
-    private TicTacToeGrid _Grid;
+    private TicTacToeGrid _Grid = new(1);
     private int _NumberOfTokensPerPlayer = 5;
     private Player[] _Player = new Player[2];
-    private String[] _FileNames = [
-       "assets/x_red.png",
-       "assets/x_blue.png",
-       "assets/x_black.png",
-       "assets/o_red.png",
-       "assets/o_blue.png",
-       "assets/o_black.png"
-      ];
-    public enum TokenNames
-    {
-      xRed,
-      xBlue,
-      xBlack,
-      oRed,
-      oBlue,
-      oBlack
-    }
 
     public MainWindow()
     {
@@ -46,9 +29,8 @@ namespace tictactoe
         MenuSetup_ColorComboBox.Items.Add(color);
         MenuSetup_ColorComboBox1.Items.Add(color);
       }
-      _Player[0] = new Player("Player 1", 2, _FileNames[(int)TokenNames.oBlue], Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
-      _Player[1] = new Player("Player 2", 10, _FileNames[(int)TokenNames.xRed], Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
-      _Grid = new(_Player[0].TurnNumber);
+      MenuSetup_ColorComboBox.SelectedItem = TokenColors.red;
+      MenuSetup_ColorComboBox1.SelectedItem = TokenColors.blue;
     }
 
     private void HidePlayerTokens()
@@ -87,7 +69,7 @@ namespace tictactoe
       return "";
     }
 
-    private void TttBtnClick(object sender, RoutedEventArgs e)
+    private void TttBtn_OnClick(object sender, RoutedEventArgs e)
     {
       Console.WriteLine($"TttBtnClick: {Grid.GetRow((UIElement)sender)}, {Grid.GetColumn((UIElement)sender)}");
       Debug.WriteLine($"TttBtnClick: {Grid.GetRow((UIElement)sender)}, {Grid.GetColumn((UIElement)sender)}");
@@ -105,6 +87,10 @@ namespace tictactoe
         {
 
         }
+        else
+        {
+
+        }
       }
       else if (result == -1)
       {
@@ -113,13 +99,13 @@ namespace tictactoe
       }
     }
 
-    private void StartGame(object sender, RoutedEventArgs e)
+    private void StartSetupBtn_OnClick(object sender, RoutedEventArgs e)
     {
       MenuStart.Visibility = Visibility.Collapsed;
       MenuSetup.Visibility = Visibility.Visible;
     }
 
-    private void UncheckAlternateX(object sender, RoutedEventArgs e)
+    private void UncheckAlternateXRadio_OnClick(object sender, RoutedEventArgs e)
     {
       if (MenuSetup_TokenORadioButton1 != null)
       {
@@ -127,7 +113,7 @@ namespace tictactoe
       }
     }
 
-    private void UncheckAlternateX1(object sender, RoutedEventArgs e)
+    private void UncheckAlternateX1Radio_OnClick(object sender, RoutedEventArgs e)
     {
       if (MenuSetup_TokenORadioButton != null)
       {
@@ -135,7 +121,7 @@ namespace tictactoe
       }
     }
 
-    private void UncheckAlternateO(object sender, RoutedEventArgs e)
+    private void UncheckAlternateORadio_OnClick(object sender, RoutedEventArgs e)
     {
       if (MenuSetup_TokenXRadioButton1 != null)
       {
@@ -143,12 +129,44 @@ namespace tictactoe
       }
     }
 
-    private void UncheckAlternateO1(object sender, RoutedEventArgs e)
+    private void UncheckAlternateO1Radio_OnClick(object sender, RoutedEventArgs e)
     {
       if (MenuSetup_TokenXRadioButton != null)
       {
         MenuSetup_TokenXRadioButton.IsChecked = true;
       }
+    }
+
+    private void StartGameBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+      StartGame();
+    }
+
+    private void StartGame()
+    {
+      TokenTypes type = TokenTypes.x;
+      TokenTypes type1 = TokenTypes.o;
+      if (MenuSetup_TokenORadioButton.IsChecked != null && (bool)MenuSetup_TokenORadioButton.IsChecked)
+      {
+        type = TokenTypes.o;
+        type1 = TokenTypes.x;
+      }
+      _Player[0] = new Player(MenuSetup_NameTextBox.Text, 2,
+        TokensCoordinator.GetTokenFileName(type, (TokenColors)MenuSetup_ColorComboBox.SelectionBoxItem),
+        Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
+      _Player[1] = new Player(MenuSetup_NameTextBox1.Text, 10,
+        TokensCoordinator.GetTokenFileName(type1, (TokenColors)MenuSetup_ColorComboBox1.SelectionBoxItem),
+        Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
+      if (MenuSetup_RadioButton.IsChecked != null && (bool)MenuSetup_RadioButton.IsChecked)
+      {
+        _Grid = new(_Player[0].TurnNumber);
+      }
+      else
+      {
+        _Grid = new(_Player[1].TurnNumber);
+      }
+      MenuSetup.Visibility = Visibility.Collapsed;
+      gridBorder.Visibility = Visibility.Visible;
     }
   }
 }
