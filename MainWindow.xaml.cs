@@ -1,14 +1,6 @@
-﻿using System.Diagnostics;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace tictactoe
 {
@@ -24,25 +16,40 @@ namespace tictactoe
     public MainWindow()
     {
       InitializeComponent();
+      // Filling in the options for the ComboBox due to limitations of data binding to Enums.
       foreach (TokenColors color in Enum.GetValues(typeof(TokenColors)))
       {
         MenuSetup_ColorComboBox.Items.Add(color);
         MenuSetup_ColorComboBox1.Items.Add(color);
       }
+      // Setting default selection.
       MenuSetup_ColorComboBox.SelectedItem = TokenColors.red;
       MenuSetup_ColorComboBox1.SelectedItem = TokenColors.blue;
     }
 
+    /// <summary>
+    /// Hides all player tokens.
+    /// </summary>
     private void HidePlayerTokens()
     {
       foreach (Player player in _Player)
       {
-        player.HideTokens();
+        if (player != null)
+        {
+          player.HideTokens();
+        }
       }
     }
 
+    /// <summary>
+    /// Finds the current turn's player and sets their token to the specified coordinates.
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="col"></param>
+    /// <returns>False if the row or col are out of bounds.</returns>
     private bool SetPlayerMove(int row, int col)
     {
+      // Validation for TTT grid.
       if (row < 0 || col < 0 || row > 2 || col > 2) return false;
       int i;
       for (i = 0; i < _Player.Length; i++)
@@ -56,6 +63,10 @@ namespace tictactoe
       return false;
     }
 
+    /// <summary>
+    /// Finds the current turn's player and return their name.
+    /// </summary>
+    /// <returns>player.Name</returns>
     private String GetCurrentPlayerName()
     {
       int i;
@@ -69,15 +80,20 @@ namespace tictactoe
       return "";
     }
 
+    /// <summary>
+    /// Main event for TicTacToe. Used on each square in the TicTacToe Grid.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void TttBtn_OnClick(object sender, RoutedEventArgs e)
     {
-      Console.WriteLine($"TttBtnClick: {Grid.GetRow((UIElement)sender)}, {Grid.GetColumn((UIElement)sender)}");
-      Debug.WriteLine($"TttBtnClick: {Grid.GetRow((UIElement)sender)}, {Grid.GetColumn((UIElement)sender)}");
+      // Visual change on Grid for user.
       SetPlayerMove(Grid.GetRow((UIElement)sender), Grid.GetColumn((UIElement)sender));
+      // Background change for tracking in TicTacToeGrid.
       int result = _Grid.ChangeEntry(Grid.GetRow((UIElement)sender), Grid.GetColumn((UIElement)sender));
       if (result == 0)
       {
-        // Indicate turn swap
+        // Indicating turn swap. Could use to be more noticable in future update.
         PlayerTurnLabel.Content = GetCurrentPlayerName();
       }
       else if (result > 0)
@@ -85,11 +101,13 @@ namespace tictactoe
         // There was a win
         if (EndGameMessageBox.Show($"{GetCurrentPlayerName()} won.") == false)
         {
+          // Menu
           MenuStart.Visibility = Visibility.Visible;
           gridBorder.Visibility = Visibility.Collapsed;
         }
         else
         {
+          // Restart
           StartGame();
         }
       }
@@ -98,22 +116,30 @@ namespace tictactoe
         // Cat's Eye
         if (EndGameMessageBox.Show("Cat's Eye! :(") == false)
         {
+          // Menu
           MenuStart.Visibility = Visibility.Visible;
           gridBorder.Visibility = Visibility.Collapsed;
         }
         else
         {
+          // Restart
           StartGame();
         }
       }
     }
 
+    /// <summary>
+    /// StartSetup button on MenuStart.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void StartSetupBtn_OnClick(object sender, RoutedEventArgs e)
     {
       MenuStart.Visibility = Visibility.Collapsed;
       MenuSetup.Visibility = Visibility.Visible;
     }
 
+    // Start------Radio buttons alternating events------------------------------------------------------------
     private void UncheckAlternateXRadio_OnClick(object sender, RoutedEventArgs e)
     {
       if (MenuSetup_TokenORadioButton1 != null)
@@ -145,34 +171,46 @@ namespace tictactoe
         MenuSetup_TokenXRadioButton.IsChecked = true;
       }
     }
+    // End------Radio buttons alternating events------------------------------------------------------------
 
+    /// <summary>
+    /// StartGame button on MenuSetup.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void StartGameBtn_OnClick(object sender, RoutedEventArgs e)
     {
       StartGame();
     }
 
+    /// <summary>
+    /// Sets up the game board based on MenuSetup. Used for new game or restart.
+    /// </summary>
     private void StartGame()
     {
-      TokenTypes type = TokenTypes.x;
-      TokenTypes type1 = TokenTypes.o;
+      // Determining X and O
+      TokenTypes type, type1;
       if (MenuSetup_TokenORadioButton.IsChecked != null && (bool)MenuSetup_TokenORadioButton.IsChecked)
       {
         type = TokenTypes.o;
         type1 = TokenTypes.x;
       }
-      foreach (Player player in _Player)
+      else
       {
-        if (player != null)
-        {
-          player.HideTokens();
-        }
+        type = TokenTypes.x;
+        type1 = TokenTypes.o;
       }
+
+      // In case of restart.
+      HidePlayerTokens();
       _Player[0] = new Player(MenuSetup_NameTextBox.Text, 2,
         TokensCoordinator.GetTokenFileName(type, (TokenColors)MenuSetup_ColorComboBox.SelectionBoxItem),
         Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
       _Player[1] = new Player(MenuSetup_NameTextBox1.Text, 10,
         TokensCoordinator.GetTokenFileName(type1, (TokenColors)MenuSetup_ColorComboBox1.SelectionBoxItem),
         Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
+
+      // Determining player to go first.
       if (MenuSetup_RadioButton.IsChecked != null && (bool)MenuSetup_RadioButton.IsChecked)
       {
         _Grid = new(_Player[0].TurnNumber);
@@ -183,6 +221,8 @@ namespace tictactoe
         _Grid = new(_Player[1].TurnNumber);
         PlayerTurnLabel.Content = _Player[1].Name;
       }
+      // Setting visibility in case of new game.
+
       MenuSetup.Visibility = Visibility.Collapsed;
       gridBorder.Visibility = Visibility.Visible;
     }

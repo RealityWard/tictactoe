@@ -1,10 +1,12 @@
-﻿
-using Accessibility;
-
-namespace tictactoe
+﻿namespace tictactoe
 {
   class TicTacToeGrid
   {
+    /// <summary>
+    /// Internal grid for tracking moves and analyzing win conditions and
+    /// eventually bot moves. Set with default of 1's for no effect 
+    /// on product of each win condition line.
+    /// </summary>
     private int[][] _Grid = [
       [1, 1, 1],
       [1, 1, 1],
@@ -17,7 +19,13 @@ namespace tictactoe
     /// </summary>
     private int[] _WinStates = [1, 1, 1, 1, 1, 1, 1, 1];
 
+    /// <summary>
+    /// Current player's turn number.
+    /// </summary>
     private int _Turn = 0;
+    /// <summary>
+    /// Current player's turn number.
+    /// </summary>
     public int Turn
     { get { return _Turn; } }
 
