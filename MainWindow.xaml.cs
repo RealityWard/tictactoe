@@ -78,24 +78,33 @@ namespace tictactoe
       if (result == 0)
       {
         // Indicate turn swap
-        MessageBox.Show("Need to Indicate turn swap", "Error", MessageBoxButton.OK);
+        PlayerTurnLabel.Content = GetCurrentPlayerName();
       }
       else if (result > 0)
       {
         // There was a win
-        if (WinnerMessageBox.Show($"{GetCurrentPlayerName()} won.") == false)
+        if (EndGameMessageBox.Show($"{GetCurrentPlayerName()} won.") == false)
         {
-
+          MenuStart.Visibility = Visibility.Visible;
+          gridBorder.Visibility = Visibility.Collapsed;
         }
         else
         {
-
+          StartGame();
         }
       }
       else if (result == -1)
       {
         // Cat's Eye
-        MessageBox.Show("Cat's Eye! :(", "Draw", MessageBoxButton.OK);
+        if (EndGameMessageBox.Show("Cat's Eye! :(") == false)
+        {
+          MenuStart.Visibility = Visibility.Visible;
+          gridBorder.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+          StartGame();
+        }
       }
     }
 
@@ -151,6 +160,13 @@ namespace tictactoe
         type = TokenTypes.o;
         type1 = TokenTypes.x;
       }
+      foreach (Player player in _Player)
+      {
+        if (player != null)
+        {
+          player.HideTokens();
+        }
+      }
       _Player[0] = new Player(MenuSetup_NameTextBox.Text, 2,
         TokensCoordinator.GetTokenFileName(type, (TokenColors)MenuSetup_ColorComboBox.SelectionBoxItem),
         Stretch.Fill, _NumberOfTokensPerPlayer, ticTacToeGrid);
@@ -160,10 +176,12 @@ namespace tictactoe
       if (MenuSetup_RadioButton.IsChecked != null && (bool)MenuSetup_RadioButton.IsChecked)
       {
         _Grid = new(_Player[0].TurnNumber);
+        PlayerTurnLabel.Content = _Player[0].Name;
       }
       else
       {
         _Grid = new(_Player[1].TurnNumber);
+        PlayerTurnLabel.Content = _Player[1].Name;
       }
       MenuSetup.Visibility = Visibility.Collapsed;
       gridBorder.Visibility = Visibility.Visible;

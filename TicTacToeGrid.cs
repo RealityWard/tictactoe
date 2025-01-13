@@ -38,6 +38,12 @@ namespace tictactoe
       }
     }
 
+    /// <summary>
+    /// Changes the entry in the _Grid to the player turn number.
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="col"></param>
+    /// <returns>0 for normal, -1 for cats eye, 1 to 8 for win</returns>
     public int ChangeEntry(int row, int col)
     {
       if (row < 0 || col < 0 || row > 2 || col > 2) return -1;

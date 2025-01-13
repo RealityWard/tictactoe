@@ -10,9 +10,9 @@ using System.Windows.Media;
 
 namespace tictactoe
 {
-  public partial class Winner : Window
+  public partial class EndGame : Window
   {
-    public Winner()
+    public EndGame()
     {
       InitializeComponent();
 
@@ -34,11 +34,11 @@ namespace tictactoe
     }
   }
 
-  public class WinnerMessageBox
+  public class EndGameMessageBox
   {
     public static bool? Show(string text)
     {
-      Winner msg = new Winner
+      EndGame msg = new EndGame
       {
         labelText = { Content = text }
       };

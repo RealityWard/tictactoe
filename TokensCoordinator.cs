@@ -15,8 +15,7 @@ namespace tictactoe
   public enum TokenColors
   {
     red,
-    blue,
-    black
+    blue
   }
   class TokensCoordinator
   {
@@ -24,12 +23,10 @@ namespace tictactoe
         [
          "assets/x_red.png",
          "assets/x_blue.png",
-         "assets/x_black.png"
         ],
         [
          "assets/o_red.png",
          "assets/o_blue.png",
-         "assets/o_black.png"
         ]
       ];
 
